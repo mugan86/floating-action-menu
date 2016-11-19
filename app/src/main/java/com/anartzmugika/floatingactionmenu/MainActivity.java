@@ -1,10 +1,14 @@
 package com.anartzmugika.floatingactionmenu;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.text.Html;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -14,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
+
+    private TextView info_device;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,23 +37,6 @@ public class MainActivity extends AppCompatActivity {
                 .permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-
-        // Get Device Manufacturer and model without using library
-        System.out.println(Device.getDeviceName());
-
-        //Without using library
-        System.out.println("Manufacturer: " + Device.getDeviceManuFacturer());
-        System.out.println("Product: " + Device.getDeviceProduct());
-        System.out.println("Model: " + Device.getDeviceModel());
-
-
-        //Get Device most important info using 'com.jaredrummler:android-device-names:1.1.2' library
-        DeviceName.DeviceInfo info_device = DeviceName.getDeviceInfo(MainActivity.this);
-        System.out.println("Manufacturer: " + info_device.manufacturer);
-        System.out.println("Model: " + info_device.model);
-        System.out.println("Market Name: " + info_device.marketName);
-        System.out.println("Code Name: " + info_device.codename);
-
         //Obtain Device Name model and current SDK
         System.out.println(DeviceName.getDeviceName() + " / SDK: " + SDK_INT);
 
@@ -56,23 +45,46 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton2 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item2);
         floatingActionButton3 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item3);
 
+        info_device = (TextView) findViewById(R.id.info_device);
+
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO something when floating action menu first item clicked
+                //Without using library
 
+                // Get Device Manufacturer and model without using library
+                System.out.println(Device.getDeviceName());
+
+                String html = "<h1>Device properties without using library<h1>" +
+                        "<p>\"Manufacturer: \"" + Device.getDeviceManuFacturer() + "</p>" +
+                        "<p>\"Product: \"" + Device.getDeviceProduct() + "</p>" +
+                        "<p>\"Model: \"" + Device.getDeviceModel() + "</p>" +
+                        "Some text";
+                addContentToShowinLayout(html);
+                materialDesignFAM.close(true);
 
             }
         });
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu second item clicked
+                //Get Device most important info using 'com.jaredrummler:android-device-names:1.1.2' library
+                DeviceName.DeviceInfo info_device = DeviceName.getDeviceInfo(MainActivity.this);
 
+                String html = "<h1>Device properties with using library<h1>" +
+                        "<p>\"Manufacturer: \"" + info_device.manufacturer + "</p>" +
+                        "<p>\"Market name: \"" + info_device.marketName + "</p>" +
+                        "<p>\"Model: \"" + info_device.model + "</p>" +
+                        "<p>\"Codename: \"" + info_device.codename + "</p>" +
+                        "Some text";
+                addContentToShowinLayout(html);
+                materialDesignFAM.close(true);
             }
         });
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu third item clicked
-
+                sendEmail("Contact with Anartz!");
+                materialDesignFAM.close(true);
             }
         });
     }
@@ -90,5 +102,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addContentToShowinLayout(String info)
+    {
+        info_device.setText(Html.fromHtml(info));
+    }
+
+    private void sendEmail(String subject) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"mugan86@gmail.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        if (intent.resolveActivity(getPackageManager()) != null) { startActivity(intent);}
     }
 }
