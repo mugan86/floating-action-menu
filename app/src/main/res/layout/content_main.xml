@@ -26,7 +26,6 @@
         fab:menu_colorNormal="#da3c2f"
         fab:menu_colorPressed="#dc4b3f"
         fab:menu_colorRipple="#99d4d4d4"
-        fab:menu_fab_label="Floating Action Menu"
         fab:menu_fab_size="normal"
         fab:menu_icon="@drawable/fab_add"
         fab:menu_labels_colorNormal="#333"
@@ -60,7 +59,6 @@
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/material_design_floating_action_menu_item1"
-            fab:fab_label="Device Manufacturer / Model"
             fab:fab_size="mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +66,6 @@
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/material_design_floating_action_menu_item2"
-            fab:fab_label="Device Manufacturer / Model (Library)"
             fab:fab_size="mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +73,6 @@
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/material_design_floating_action_menu_item3"
-            fab:fab_label="Contact With Me"
             fab:fab_size="mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
