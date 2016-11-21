@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
                 .permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(getResources().getString(R.string.app_name));
+
         //Obtain Device Name model and current SDK
         System.out.println(DeviceName.getDeviceName() + " / SDK: " + SDK_INT);
 
@@ -46,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton3 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item3);
 
         info_device = (TextView) findViewById(R.id.info_device);
+
+        info_device.setText(getResources().getString(R.string.start_text));
 
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
